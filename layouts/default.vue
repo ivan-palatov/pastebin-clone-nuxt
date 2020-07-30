@@ -24,7 +24,7 @@
     </v-app-bar>
 
     <v-main>
-      <nuxt-child />
+      <nuxt />
     </v-main>
   </v-app>
 </template>
