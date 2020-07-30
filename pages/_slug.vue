@@ -10,6 +10,17 @@
         <prism-text :paste="paste" />
       </v-col>
     </v-row>
+    <v-row>
+      <v-col>
+        <v-textarea
+          rows="10"
+          no-resize
+          outlined
+          label="RAW Paste Data"
+          :value="paste.text"
+        />
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 

@@ -11,14 +11,23 @@
     <div class="cont">
       <h1 class="text-h6 mb-3">{{ title }}</h1>
       <div class="fl cont-info">
-        <v-icon small>mdi-account</v-icon>
-        <nuxt-link
-          v-if="paste.author"
-          class="text-caption"
-          :to="'/u/' + paste.author.name"
-          >{{ paste.author.name }}</nuxt-link
-        >
-        <span v-else class="text-caption">A GUEST</span>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <span v-bind="attrs" v-on="on">
+              <v-icon small>mdi-account</v-icon>
+              <nuxt-link
+                v-if="paste.author"
+                class="text-caption"
+                :to="'/u/' + paste.author.name"
+              >
+                {{ paste.author.name }}
+              </nuxt-link>
+              <span v-else class="text-caption">A guest</span>
+            </span>
+          </template>
+          <span>User who created this paste</span>
+        </v-tooltip>
+
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
             <span v-bind="attrs" v-on="on">
@@ -38,6 +47,7 @@
           </template>
           <span>Amount of visits to this paste</span>
         </v-tooltip>
+
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
             <span v-bind="attrs" v-on="on">
