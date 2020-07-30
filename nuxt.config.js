@@ -1,3 +1,4 @@
+import MomentLocalesPlugin from 'moment-locales-webpack-plugin';
 import colors from 'vuetify/es5/util/colors';
 
 export default {
@@ -90,5 +91,11 @@ export default {
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/
    */
-  build: {},
+  build: {
+    extend(config) {
+      config.plugins.push(
+        new MomentLocalesPlugin({ localesToKeep: ['ru-ru'] })
+      );
+    },
+  },
 };

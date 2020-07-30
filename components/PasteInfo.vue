@@ -10,7 +10,7 @@
     </div>
     <div class="cont">
       <h1 class="text-h6">{{ title }}</h1>
-      <div>
+      <div class="fl cont-info">
         <v-icon small>mdi-account</v-icon>
         <nuxt-link
           v-if="paste.author"
@@ -23,17 +23,17 @@
           <template v-slot:activator="{ on, attrs }">
             <span v-bind="attrs" v-on="on">
               <v-icon small class="ml-2">mdi-calendar-month</v-icon>
-              <span class="text-caption">21.12.1995 (EDITED)</span>
+              <span class="text-caption">{{ date }}</span>
             </span>
           </template>
-          <span>21.12.1995 full date stuff</span>
+          <span>{{ fullDate }}</span>
         </v-tooltip>
 
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
             <span v-bind="attrs" v-on="on">
               <v-icon small class="ml-2">mdi-eye</v-icon>
-              <span class="text-caption">105</span>
+              <span class="text-caption">{{ paste.views }}</span>
             </span>
           </template>
           <span>Amount of visits to this paste</span>
@@ -42,7 +42,7 @@
           <template v-slot:activator="{ on, attrs }">
             <span v-bind="attrs" v-on="on">
               <v-icon small class="ml-2">mdi-timer</v-icon>
-              <span class="text-caption">1 HOUR</span>
+              <span class="text-caption">{{ expiresIn }}</span>
             </span>
           </template>
           <span>When this paste gets automaicaly deleted</span>
@@ -53,6 +53,9 @@
 </template>
 
 <script>
+import moment from 'moment';
+import { getStringDiff } from '@/utils/time';
+
 export default {
   name: 'PasteInfo',
   props: {
@@ -64,6 +67,23 @@ export default {
   computed: {
     title() {
       return this.paste.title ? this.paste.title : 'Untitled';
+    },
+    date() {
+      return new Date(this.paste.date).toLocaleString(['ru-RU', 'en-US'], {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      });
+    },
+    fullDate() {
+      return new Date(this.paste.date).toLocaleString(['ru-RU', 'en-US']);
+    },
+    expiresIn() {
+      if (!this.paste.expiresIn) {
+        return 'NEVER';
+      }
+
+      return getStringDiff(moment(this.paste.expiresIn), moment());
     },
   },
 };
@@ -80,5 +100,9 @@ export default {
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+}
+
+.cont-info {
+  flex-wrap: wrap;
 }
 </style>
