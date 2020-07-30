@@ -1,15 +1,24 @@
 <template>
   <v-app>
     <v-navigation-drawer v-model="drawer" clipped app right>
-      <v-list dense>
-        <v-list-item v-for="link in links" :key="link.text" link>
-          <v-list-item-action>
+      <v-list dense subheader nav two-line>
+        <v-subheader>Public Pastes</v-subheader>
+        <v-list-item
+          v-for="paste in pastes"
+          :key="paste.id"
+          :to="'/' + paste.id"
+          nuxt
+        >
+          <v-list-item-avatar>
             <v-icon>mdi-clipboard-text-multiple-outline</v-icon>
-          </v-list-item-action>
+          </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title>
-              {{ link.text }}
+              {{ paste.title }}
             </v-list-item-title>
+            <v-list-item-subtitle>
+              {{ paste.lang }} | {{ paste.timeAgo }}
+            </v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -17,7 +26,9 @@
 
     <v-app-bar app clipped-right dense color="primary" dark>
       <v-toolbar-title>
-        Pastebin Clone
+        <nuxt-link class="toolbar__title" to="/">
+          Pastebin Clone
+        </nuxt-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
@@ -30,12 +41,24 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   data() {
     return {
       drawer: null,
-      links: [{ text: 'Link 1' }, { text: 'Link 2' }],
     };
+  },
+  computed: mapState('paste', ['pastes']),
+  created() {
+    this.$store.dispatch('paste/fetchPastes');
   },
 };
 </script>
+
+<style scoped>
+.toolbar__title {
+  color: inherit;
+  text-decoration: inherit;
+}
+</style>

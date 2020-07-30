@@ -9,7 +9,7 @@
       </v-avatar>
     </div>
     <div class="cont">
-      <h1 class="text-h6">{{ title }}</h1>
+      <h1 class="text-h6 mb-3">{{ title }}</h1>
       <div class="fl cont-info">
         <v-icon small>mdi-account</v-icon>
         <nuxt-link
@@ -54,7 +54,6 @@
 
 <script>
 import moment from 'moment';
-import { getStringDiff } from '@/utils/time';
 
 export default {
   name: 'PasteInfo',
@@ -80,10 +79,10 @@ export default {
     },
     expiresIn() {
       if (!this.paste.expiresIn) {
-        return 'NEVER';
+        return 'НИКОГДА';
       }
 
-      return getStringDiff(moment(this.paste.expiresIn), moment());
+      return moment(this.paste.expiresIn).locale('ru-ru').fromNow();
     },
   },
 };
