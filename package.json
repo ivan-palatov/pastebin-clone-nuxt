@@ -16,7 +16,8 @@
     "clipboard": "^2.0.6",
     "moment": "^2.27.0",
     "nuxt": "^2.14.0",
-    "prismjs": "^1.20.0"
+    "prismjs": "^1.20.0",
+    "vuelidate": "^0.7.5"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^3.1.0",

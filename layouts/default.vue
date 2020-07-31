@@ -30,7 +30,9 @@
           Pastebin Clone
         </nuxt-link>
       </v-toolbar-title>
-      <v-spacer></v-spacer>
+      <v-spacer />
+      <v-btn nuxt to="/login" text rounded>Login</v-btn>
+      <v-btn nuxt to="/register" text rounded>Register</v-btn>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
     </v-app-bar>
 
