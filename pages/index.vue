@@ -30,9 +30,10 @@
             label="Syntax Highlighting"
             outlined
             dense
+            :items="langItems"
           />
           <v-checkbox
-            v-if="isAuthorized"
+            v-show="isAuthorized && exposure !== 'private'"
             v-model="asGuest"
             label="Paste as guest"
             dense
@@ -127,11 +128,14 @@
 </template>
 
 <script>
+import { pasteSettings } from '@/mixins/pasteSettings';
+
 export default {
+  mixins: [pasteSettings],
   data() {
     return {
       loading: false,
-      isAuthorized: false, // TODO: change to an actual isAuthorized
+      isAuthorized: true, // TODO: change to an actual isAuthorized
       user: {
         name: 'ZVER3D',
       }, // TODO: same as the above
@@ -139,24 +143,8 @@ export default {
       text: '',
       title: '',
       exposure: 'public',
-      expiration: 'Never',
-      lang: 'None',
-      exposureItems: [
-        'public',
-        'unlisted',
-        { value: 'private', text: 'private', disabled: true },
-      ],
-      expirationItems: [
-        'Never',
-        '10 Minutes',
-        '1 Hour',
-        '1 Day',
-        '1 Week',
-        '2 Weeks',
-        '1 Month',
-        '6 Months',
-        '1 Year',
-      ],
+      expiration: 0,
+      lang: 'text',
     };
   },
   methods: {
