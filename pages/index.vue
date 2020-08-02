@@ -8,7 +8,7 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="12" sm="6">
+        <v-col cols="12" sm="7">
           <h3 class="mb-3">Optional Paste Settings</h3>
           <v-text-field v-model="title" label="Paste Title" outlined dense />
           <v-select
@@ -39,10 +39,89 @@
           />
           <v-btn type="submit" color="primary">Create New Paste</v-btn>
         </v-col>
-        <v-col cols="12" sm="6">
-          <!-- Authorization stuff goes here -->
+        <v-col v-if="!isAuthorized" cols="12" sm="5">
+          <h3 class="mb-3">User details</h3>
+          <v-card class="fl">
+            <v-avatar color="warning" size="64" class="mr-4">
+              <v-icon dark>
+                mdi-account-circle
+              </v-icon>
+            </v-avatar>
+            <div class="fl fl-col">
+              <span>Hello, <strong>Guest</strong></span>
+              <span>
+                <nuxt-link to="/login">Login</nuxt-link> or
+                <nuxt-link to="/register">Register</nuxt-link>
+              </span>
+            </div>
+          </v-card>
+          <h4 class="mt-4">
+            Or login with socials
+          </h4>
+
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn icon v-bind="attrs" v-on="on">
+                <v-icon color="#4A76A8">mdi-vk</v-icon>
+              </v-btn>
+            </template>
+            <span>Vkontakte</span>
+          </v-tooltip>
+
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn icon v-bind="attrs" v-on="on">
+                <v-icon color="#1DA1F2">mdi-twitter</v-icon>
+              </v-btn>
+            </template>
+            <span>Twitter</span>
+          </v-tooltip>
+
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn icon v-bind="attrs" v-on="on">
+                <v-icon color="#3B5998">mdi-facebook</v-icon>
+              </v-btn>
+            </template>
+            <span>Facebook</span>
+          </v-tooltip>
+
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn icon v-bind="attrs" v-on="on">
+                <v-icon color="#24292E">mdi-github</v-icon>
+              </v-btn>
+            </template>
+            <span>Github</span>
+          </v-tooltip>
+
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn icon v-bind="attrs" v-on="on">
+                <v-icon color="#FC6D27">mdi-gitlab</v-icon>
+              </v-btn>
+            </template>
+            <span>Gitlab</span>
+          </v-tooltip>
+        </v-col>
+
+        <v-col v-else cols="12" sm="5">
+          <h3 class="mb-3">User details</h3>
+          <v-card class="fl">
+            <v-avatar color="warning" size="64" class="mr-4">
+              <v-icon v-if="!user.avatar" dark>
+                mdi-account-circle
+              </v-icon>
+              <img v-else :src="user.avatar" alt="Avatar" />
+            </v-avatar>
+            <div class="fl fl-col">
+              <strong>{{ user.name }}</strong>
+              <nuxt-link :to="'/u/' + user.name">My Pastebin</nuxt-link>
+            </div>
+          </v-card>
         </v-col>
       </v-row>
+      <v-progress-linear v-if="loading" indeterminate color="warning" />
     </v-container>
   </form>
 </template>
@@ -51,8 +130,12 @@
 export default {
   data() {
     return {
-      isAuthorized: true, // TODO: change to an actual isAuthorized
-      asGuest: true,
+      loading: false,
+      isAuthorized: false, // TODO: change to an actual isAuthorized
+      user: {
+        name: 'ZVER3D',
+      }, // TODO: same as the above
+      asGuest: false,
       text: '',
       title: '',
       exposure: 'public',
@@ -76,6 +159,11 @@ export default {
       ],
     };
   },
+  methods: {
+    create() {
+      this.loading = true;
+    },
+  },
 };
 </script>
 
@@ -85,5 +173,14 @@ export default {
   height: 100%;
   padding: 0;
   margin: 0;
+}
+
+.fl {
+  display: flex;
+}
+
+.fl-col {
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 </style>
