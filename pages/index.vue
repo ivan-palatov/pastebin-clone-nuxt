@@ -32,12 +32,14 @@
             dense
             :items="langItems"
           />
-          <v-checkbox
-            v-show="isAuthorized && exposure !== 'private'"
-            v-model="asGuest"
-            label="Paste as guest"
-            dense
-          />
+          <transition name="slide-fade">
+            <v-checkbox
+              v-show="isAuthorized && exposure !== 'private'"
+              v-model="asGuest"
+              label="Paste as guest"
+              dense
+            />
+          </transition>
           <v-btn type="submit" color="primary">Create New Paste</v-btn>
         </v-col>
         <v-col v-if="!isAuthorized" cols="12" sm="5">
@@ -170,5 +172,16 @@ export default {
 .fl-col {
   flex-direction: column;
   justify-content: space-evenly;
+}
+
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+  transition: all 0.6s ease;
+}
+
+.slide-fade-enter,
+.slide-fade-leave-to {
+  transform: translateX(10px);
+  opacity: 0;
 }
 </style>
