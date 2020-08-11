@@ -2,7 +2,7 @@ export const pasteSettings = {
   data() {
     return {
       expirationItems: [
-        { value: 0, text: 'Never' },
+        { value: null, text: 'Never' },
         { value: 10, text: '10 Minutes' },
         { value: 60, text: '1 Hour' },
         { value: 1440, text: '1 Day' },

@@ -145,7 +145,7 @@ export default {
       text: '',
       title: '',
       exposure: 'public',
-      expiration: 0,
+      expiration: null,
       lang: 'text',
     };
   },

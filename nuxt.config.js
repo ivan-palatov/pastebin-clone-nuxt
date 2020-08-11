@@ -38,7 +38,7 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: ['~/plugins/axios', '~/plugins/vuelidate'],
+  plugins: ['~/plugins/vuelidate'],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -64,7 +64,7 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: 'http://localhost:4000',
+    baseURL: 'http://localhost:4000/api',
   },
   /*
    ** vuetify module configuration

@@ -12,7 +12,7 @@ export const mutations = {
 
 export const actions = {
   async fetchPastes({ commit }) {
-    const pastes = await this.$axios.$get('/paste/');
+    const pastes = await this.$axios.$get('/pastes/recent');
     commit(
       'SET_PASTES',
       pastes.map((paste) => ({

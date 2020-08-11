@@ -27,8 +27,12 @@
 <script>
 export default {
   async asyncData({ $axios, params, error }) {
-    const data = await $axios.$get('/paste/' + params.slug);
-    return { paste: data };
+    try {
+      const paste = await $axios.$get('/pastes/id/' + params.slug);
+      return { paste };
+    } catch (e) {
+      error(e.response.data);
+    }
   },
   data() {
     return {
