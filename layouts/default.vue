@@ -46,6 +46,9 @@
 import { mapState } from 'vuex';
 
 export default {
+  mounted() {
+    this.$store.dispatch('user/authorize');
+  },
   data() {
     return {
       drawer: null,

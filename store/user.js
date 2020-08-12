@@ -29,7 +29,6 @@ export const actions = {
   async login({ commit }, payload) {
     try {
       const { data } = await this.$axios.post('/auth/login', payload);
-      console.log(data);
       const { token, ...user } = data;
       commit('SET_USER', user);
       commit('SET_TOKEN', token);

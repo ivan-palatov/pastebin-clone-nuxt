@@ -81,6 +81,7 @@ export default {
         password: this.password,
       });
       this.loading = false;
+      this.$router.push('/');
     },
   },
 };
