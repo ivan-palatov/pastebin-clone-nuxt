@@ -26,6 +26,9 @@
           @blur="$v.password.$touch()"
         />
       </v-form>
+      <v-alert v-model="alert" type="error" outlined dense dismissible>{{
+        serverError
+      }}</v-alert>
     </v-card-text>
     <v-card-actions>
       <v-spacer />
@@ -47,6 +50,8 @@ export default {
       email: '',
       password: '',
       showPassword: false,
+      serverError: null,
+      alert: false,
     };
   },
   validations: {
@@ -75,13 +80,27 @@ export default {
       if (this.$v.$invalid) {
         return;
       }
+
+      this.alert = false;
       this.loading = true;
-      await this.$store.dispatch('user/login', {
-        email: this.email,
-        password: this.password,
-      });
-      this.loading = false;
-      this.$router.push('/');
+      try {
+        const { token, ...user } = await this.$axios.$post('/auth/login', {
+          email: this.email,
+          password: this.password,
+        });
+        localStorage.setItem('token', token);
+        this.$store.commit('user/SET_USER', user);
+        this.$router.push('/');
+      } catch (e) {
+        this.alert = true;
+        if (e.response && e.response.data) {
+          this.serverError = e.response.data.message;
+          return;
+        }
+        this.serverError = 'Server is not responding.';
+      } finally {
+        this.loading = false;
+      }
     },
   },
 };

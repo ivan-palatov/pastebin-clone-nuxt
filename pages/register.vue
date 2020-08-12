@@ -46,7 +46,9 @@
           @blur="$v.password2.$touch()"
         />
       </v-form>
-      <v-alert v-if="serverError" type="error" dense>{{ serverError }}</v-alert>
+      <v-alert v-model="alert" type="error" outlined dense dismissible>{{
+        serverError
+      }}</v-alert>
     </v-card-text>
     <v-card-actions>
       <v-spacer />
@@ -78,6 +80,7 @@ export default {
       showPassword: false,
       showPassword2: false,
       serverError: null,
+      alert: false,
     };
   },
   validations: {
@@ -132,7 +135,7 @@ export default {
         return;
       }
       this.loading = true;
-      this.serverError = null;
+      this.alert = false;
       try {
         await this.$axios.post('/auth/register', {
           name: this.name,
@@ -142,6 +145,7 @@ export default {
 
         this.$router.push('/login');
       } catch (e) {
+        this.alert = true;
         if (e.response && e.response.data) {
           this.serverError = e.response.data.message;
           return;

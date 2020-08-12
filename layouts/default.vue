@@ -31,8 +31,14 @@
         </nuxt-link>
       </v-toolbar-title>
       <v-spacer />
-      <v-btn nuxt to="/login" text rounded>Login</v-btn>
-      <v-btn nuxt to="/register" text rounded>Register</v-btn>
+      <span v-if="!user">
+        <v-btn nuxt to="/login" text rounded>Login</v-btn>
+        <v-btn nuxt to="/register" text rounded>Register</v-btn>
+      </span>
+      <span v-else>
+        {{ user.name }}
+        <v-btn text rounded @click="logout">Logout</v-btn>
+      </span>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
     </v-app-bar>
 
@@ -43,21 +49,22 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 export default {
-  mounted() {
-    this.$store.dispatch('user/authorize');
-  },
   data() {
     return {
       drawer: null,
     };
   },
-  computed: mapState('paste', ['pastes']),
+  computed: { ...mapState('paste', ['pastes']), ...mapState('user', ['user']) },
   created() {
     this.$store.dispatch('paste/fetchPastes');
   },
+  mounted() {
+    this.$store.dispatch('user/authorize');
+  },
+  methods: mapActions('user', ['logout']),
 };
 </script>
 
