@@ -70,12 +70,17 @@ export default {
     },
   },
   methods: {
-    login() {
+    async login() {
       this.$v.$touch();
       if (this.$v.$invalid) {
         return;
       }
       this.loading = true;
+      await this.$store.dispatch('user/login', {
+        email: this.email,
+        password: this.password,
+      });
+      this.loading = false;
     },
   },
 };

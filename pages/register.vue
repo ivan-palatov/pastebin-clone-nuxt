@@ -124,12 +124,24 @@ export default {
     },
   },
   methods: {
-    register() {
+    async register() {
       this.$v.$touch();
       if (this.$v.$invalid) {
         return;
       }
       this.loading = true;
+      try {
+        const res = await this.$axios.post('/auth/register', {
+          name: this.name,
+          email: this.email,
+          password: this.password,
+        });
+        console.log(res, res.data);
+      } catch (e) {
+        console.log(e.response.data);
+      } finally {
+        this.loading = false;
+      }
     },
   },
 };
