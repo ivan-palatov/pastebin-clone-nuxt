@@ -44,83 +44,44 @@
         </v-col>
         <v-col v-if="!isAuthorized" cols="12" sm="5">
           <h3 class="mb-3">User details</h3>
-          <v-card class="fl">
-            <v-avatar color="warning" size="64" class="mr-4">
-              <v-icon dark>
-                mdi-account-circle
-              </v-icon>
-            </v-avatar>
-            <div class="fl fl-col">
-              <span>Hello, <strong>Guest</strong></span>
-              <span>
-                <nuxt-link to="/login">Login</nuxt-link> or
-                <nuxt-link to="/register">Register</nuxt-link>
-              </span>
-            </div>
+          <v-card>
+            <v-card-text class="fl">
+              <v-avatar color="warning" size="64" class="mr-4">
+                <v-icon dark>
+                  mdi-account-circle
+                </v-icon>
+              </v-avatar>
+              <div class="fl fl-col">
+                <span>Hello, <strong>Guest</strong></span>
+                <span>
+                  <nuxt-link to="/login">Login</nuxt-link> or
+                  <nuxt-link to="/register">Register</nuxt-link>
+                </span>
+              </div>
+            </v-card-text>
+            <v-card-actions>
+              <h4 class="mt-4">
+                Or login with socials
+              </h4>
+              <auth-links />
+            </v-card-actions>
           </v-card>
-          <h4 class="mt-4">
-            Or login with socials
-          </h4>
-
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn icon v-bind="attrs" v-on="on">
-                <v-icon color="#4A76A8">mdi-vk</v-icon>
-              </v-btn>
-            </template>
-            <span>Vkontakte</span>
-          </v-tooltip>
-
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn icon v-bind="attrs" v-on="on">
-                <v-icon color="#1DA1F2">mdi-twitter</v-icon>
-              </v-btn>
-            </template>
-            <span>Twitter</span>
-          </v-tooltip>
-
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn icon v-bind="attrs" v-on="on">
-                <v-icon color="#3B5998">mdi-facebook</v-icon>
-              </v-btn>
-            </template>
-            <span>Facebook</span>
-          </v-tooltip>
-
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn icon v-bind="attrs" v-on="on">
-                <v-icon color="#24292E">mdi-github</v-icon>
-              </v-btn>
-            </template>
-            <span>Github</span>
-          </v-tooltip>
-
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn icon v-bind="attrs" v-on="on">
-                <v-icon color="#FC6D27">mdi-gitlab</v-icon>
-              </v-btn>
-            </template>
-            <span>Gitlab</span>
-          </v-tooltip>
         </v-col>
-
         <v-col v-else cols="12" sm="5">
           <h3 class="mb-3">User details</h3>
-          <v-card class="fl">
-            <v-avatar color="warning" size="64" class="mr-4">
-              <v-icon v-if="!user.avatar" dark>
-                mdi-account-circle
-              </v-icon>
-              <img v-else :src="user.avatar" alt="Avatar" />
-            </v-avatar>
-            <div class="fl fl-col">
-              <strong>{{ user.name }}</strong>
-              <nuxt-link :to="'/u/' + user.name">My Pastebin</nuxt-link>
-            </div>
+          <v-card>
+            <v-card-text class="fl">
+              <v-avatar color="warning" size="64" class="mr-4">
+                <v-icon v-if="!user.avatar" dark>
+                  mdi-account-circle
+                </v-icon>
+                <img v-else :src="user.avatar" alt="Avatar" />
+              </v-avatar>
+              <div class="fl fl-col">
+                <strong>{{ user.name }}</strong>
+                <nuxt-link :to="'/u/' + user.name">My Pastebin</nuxt-link>
+              </div>
+            </v-card-text>
           </v-card>
         </v-col>
       </v-row>
@@ -137,7 +98,7 @@ export default {
   data() {
     return {
       loading: false,
-      isAuthorized: true, // TODO: change to an actual isAuthorized
+      isAuthorized: false, // TODO: change to an actual isAuthorized
       user: {
         name: 'ZVER3D',
       }, // TODO: same as the above

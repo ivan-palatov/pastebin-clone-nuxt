@@ -31,6 +31,7 @@
       }}</v-alert>
     </v-card-text>
     <v-card-actions>
+      <auth-links />
       <v-spacer />
       <v-btn color="primary" :disabled="loading" @click="login">
         Login
