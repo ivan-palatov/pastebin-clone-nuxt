@@ -40,16 +40,16 @@ export default {
       paste: {},
     };
   },
-  head() {
-    return {
-      link: [
-        {
-          rel: 'stylesheet',
-          href: this.isDark ? '/dark.css' : 'light.css',
-        },
-      ],
-      title: this.paste.title ? this.paste.title : this.paste.text.slice(0, 20),
-    };
-  },
+  // head() {
+  //   return {
+  //     link: [
+  //       {
+  //         rel: 'stylesheet',
+  //         href: this.isDark ? '/dark.css' : 'light.css',
+  //       },
+  //     ],
+  //     title: this.paste.title ? this.paste.title : this.paste.text.slice(0, 20),
+  //   };
+  // },
 };
 </script>

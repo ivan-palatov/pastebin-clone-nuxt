@@ -42,9 +42,9 @@ export const pasteSettings = {
   computed: {
     exposureItems() {
       return [
-        { value: 'public', text: 'Public' },
-        { value: 'unlisted', text: 'Unlisted' },
-        { value: 'private', text: 'Private', disabled: !this.isAuthorized },
+        { value: 'PUBLIC', text: 'Public' },
+        { value: 'UNLISTED', text: 'Unlisted' },
+        { value: 'PRIVATE', text: 'Private', disabled: !this.user },
       ];
     },
   },

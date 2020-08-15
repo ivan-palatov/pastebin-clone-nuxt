@@ -34,15 +34,18 @@
           />
           <transition name="slide-fade">
             <v-checkbox
-              v-show="isAuthorized && exposure !== 'private'"
+              v-show="user && exposure !== 'private'"
               v-model="asGuest"
               label="Paste as guest"
               dense
             />
           </transition>
+          <v-alert v-model="alert" type="error" outlined dense dismissible>{{
+            serverError
+          }}</v-alert>
           <v-btn type="submit" color="primary">Create New Paste</v-btn>
         </v-col>
-        <v-col v-if="!isAuthorized" cols="12" sm="5">
+        <v-col v-if="!user" cols="12" sm="5">
           <h3 class="mb-3">User details</h3>
           <v-card>
             <v-card-text class="fl">
@@ -60,10 +63,7 @@
               </div>
             </v-card-text>
             <v-card-actions>
-              <h4 class="mt-4">
-                Or login with socials
-              </h4>
-              <auth-links />
+              <auth-links class="ml-2" />
             </v-card-actions>
           </v-card>
         </v-col>
@@ -72,14 +72,14 @@
           <v-card>
             <v-card-text class="fl">
               <v-avatar color="warning" size="64" class="mr-4">
-                <v-icon v-if="!user.avatar" dark>
+                <v-icon v-if="!user.photo" dark>
                   mdi-account-circle
                 </v-icon>
-                <img v-else :src="user.avatar" alt="Avatar" />
+                <img v-else :src="user.photo" alt="Photo" />
               </v-avatar>
               <div class="fl fl-col">
                 <strong>{{ user.name }}</strong>
-                <nuxt-link :to="'/u/' + user.name">My Pastebin</nuxt-link>
+                <nuxt-link :to="'/u/' + user.id">My Pastebin</nuxt-link>
               </div>
             </v-card-text>
           </v-card>
@@ -91,6 +91,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import { pasteSettings } from '@/mixins/pasteSettings';
 
 export default {
@@ -98,21 +99,41 @@ export default {
   data() {
     return {
       loading: false,
-      isAuthorized: false, // TODO: change to an actual isAuthorized
-      user: {
-        name: 'ZVER3D',
-      }, // TODO: same as the above
       asGuest: false,
       text: '',
       title: '',
-      exposure: 'public',
+      exposure: 'PUBLIC',
       expiration: null,
       lang: 'text',
+      alert: false,
+      serverError: '',
     };
   },
+  computed: mapState('user', ['user']),
   methods: {
-    create() {
+    async create() {
+      this.alert = false;
       this.loading = true;
+      try {
+        const { shortId } = await this.$axios.$post('/pastes', {
+          title: this.title,
+          text: this.text,
+          exposure: this.exposure,
+          expiration: this.expiration,
+          lang: this.lang,
+          asUser: !this.asGuest,
+        });
+        this.$router.push(`/${shortId}`);
+      } catch (e) {
+        this.alert = true;
+        if (e.response && e.response.data) {
+          this.serverError = e.response.data.message;
+          return;
+        }
+        this.serverError = 'Server is not responding.';
+      } finally {
+        this.loading = false;
+      }
     },
   },
 };

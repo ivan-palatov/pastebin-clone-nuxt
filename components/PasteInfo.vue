@@ -2,10 +2,10 @@
   <v-card raised class="fl pa-4">
     <div class="mr-4">
       <v-avatar color="warning" size="64">
-        <v-icon v-if="!paste.author || !paste.author.avatar" dark>
+        <v-icon v-if="!paste.author || !paste.author.photo" dark>
           mdi-account-circle
         </v-icon>
-        <img v-else :src="paste.author.avatar" alt="Avatar" />
+        <img v-else :src="paste.author.photo" alt="Photo" />
       </v-avatar>
     </div>
     <div class="cont">
@@ -18,7 +18,7 @@
               <nuxt-link
                 v-if="paste.author"
                 class="text-caption"
-                :to="'/u/' + paste.author.name"
+                :to="'/u/' + paste.author.id"
               >
                 {{ paste.author.name }}
               </nuxt-link>
@@ -89,7 +89,7 @@ export default {
     },
     expiresIn() {
       if (!this.paste.expiresIn) {
-        return 'НИКОГДА';
+        return 'Никогда';
       }
 
       return moment(this.paste.expiresIn).locale('ru-ru').fromNow();
