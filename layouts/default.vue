@@ -5,8 +5,8 @@
         <v-subheader>Public Pastes</v-subheader>
         <v-list-item
           v-for="paste in pastes"
-          :key="paste.id"
-          :to="'/' + paste.id"
+          :key="paste.shortId"
+          :to="'/' + paste.shortId"
           nuxt
         >
           <v-list-item-avatar>
@@ -14,7 +14,7 @@
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title>
-              {{ paste.title }}
+              {{ paste.title ? paste.title : paste.text.slice(0, 20) }}
             </v-list-item-title>
             <v-list-item-subtitle>
               {{ paste.lang }} | {{ paste.timeAgo }}
@@ -52,15 +52,15 @@
 import { mapState, mapActions } from 'vuex';
 
 export default {
+  async fetch() {
+    await this.$store.dispatch('paste/fetchPastes');
+  },
   data() {
     return {
       drawer: null,
     };
   },
   computed: { ...mapState('paste', ['pastes']), ...mapState('user', ['user']) },
-  created() {
-    this.$store.dispatch('paste/fetchPastes');
-  },
   mounted() {
     this.$store.dispatch('user/authorize');
   },

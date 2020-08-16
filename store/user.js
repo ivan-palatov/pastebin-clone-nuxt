@@ -16,7 +16,9 @@ export const actions = {
     try {
       const user = await this.$axios.$get('/users/me');
       commit('SET_USER', user);
-    } catch {}
+    } catch (e) {
+      localStorage.removeItem('token');
+    }
   },
   logout({ commit }) {
     commit('UNSET_USER');

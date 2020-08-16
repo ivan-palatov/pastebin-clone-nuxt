@@ -1,7 +1,9 @@
 export default function ({ $axios, store }) {
   $axios.onRequest((config) => {
-    config.headers.common.Authorization = `Bearer ${localStorage.getItem(
-      'token'
-    )}`;
+    if (process.client) {
+      config.headers.common.Authorization = `Bearer ${localStorage.getItem(
+        'token'
+      )}`;
+    }
   });
 }
