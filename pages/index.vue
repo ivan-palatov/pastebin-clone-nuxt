@@ -19,7 +19,7 @@
             :items="exposureItems"
           />
           <v-select
-            v-model="expiration"
+            v-model="expiresIn"
             label="Paste Expiration"
             outlined
             dense
@@ -103,7 +103,7 @@ export default {
       text: '',
       title: '',
       exposure: 'PUBLIC',
-      expiration: null,
+      expiresIn: null,
       lang: 'text',
       alert: false,
       serverError: '',
@@ -119,7 +119,7 @@ export default {
           title: this.title,
           text: this.text,
           exposure: this.exposure,
-          expiration: this.expiration,
+          expiresIn: this.expiresIn,
           lang: this.lang,
           asUser: !this.asGuest,
         });

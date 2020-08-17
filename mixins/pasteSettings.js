@@ -44,7 +44,11 @@ export const pasteSettings = {
       return [
         { value: 'PUBLIC', text: 'Public' },
         { value: 'UNLISTED', text: 'Unlisted' },
-        { value: 'PRIVATE', text: 'Private', disabled: !this.user },
+        {
+          value: 'PRIVATE',
+          text: 'Private',
+          disabled: !this.user || this.asGuest,
+        },
       ];
     },
   },
