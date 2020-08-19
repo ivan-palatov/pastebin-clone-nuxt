@@ -36,7 +36,6 @@ export default {
   },
   data() {
     return {
-      isDark: false,
       paste: {},
     };
   },
@@ -45,7 +44,7 @@ export default {
       link: [
         {
           rel: 'stylesheet',
-          href: this.isDark ? '/dark.css' : 'light.css',
+          href: this.$vuetify.theme.dark ? '/dark.css' : 'light.css',
         },
       ],
       title: this.paste.title ? this.paste.title : this.paste.text.slice(0, 20),
