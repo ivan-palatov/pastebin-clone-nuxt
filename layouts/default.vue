@@ -45,7 +45,13 @@
         <v-btn nuxt to="/register" text rounded>Register</v-btn>
       </span>
       <span v-else>
-        {{ user.name }}
+        <v-btn nuxt :to="'/u/' + user.id" text rounded>
+          <v-avatar color="warning" size="24" class="mr-2">
+            <v-icon v-if="!user.photo" dark>mdi-account-circle</v-icon>
+            <img v-else :src="user.photo" alt="" />
+          </v-avatar>
+          <span>{{ user.name }}</span>
+        </v-btn>
         <v-btn text rounded @click="logout">Logout</v-btn>
       </span>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
@@ -74,6 +80,7 @@ export default {
     ...mapState('user', ['user']),
   },
   mounted() {
+    // Current vuetify theme
     const theme = localStorage.getItem('theme');
     if (theme && theme === 'true') {
       this.$vuetify.theme.dark = true;
