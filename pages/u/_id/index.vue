@@ -12,6 +12,15 @@
                 <img v-else :src="userInfo.photo" alt="Photo" />
               </v-avatar>
               <b>{{ userInfo.name }}</b>
+              <v-btn
+                v-if="user && user.id === userInfo.id"
+                nuxt
+                text
+                :to="'/u/' + user.id + '/edit'"
+                class="ml-4"
+              >
+                Edit
+              </v-btn>
             </v-card-text>
           </v-card>
         </v-col>

@@ -41,11 +41,11 @@
         <span>Toggle dark theme</span>
       </v-tooltip>
       <span v-if="!user">
-        <v-btn nuxt to="/login" text rounded>Login</v-btn>
-        <v-btn nuxt to="/register" text rounded>Register</v-btn>
+        <v-btn nuxt to="/login" text rounded exact>Login</v-btn>
+        <v-btn nuxt to="/register" text rounded exact>Register</v-btn>
       </span>
       <span v-else>
-        <v-btn nuxt :to="'/u/' + user.id" text rounded>
+        <v-btn nuxt :to="'/u/' + user.id" text rounded exact>
           <v-avatar color="warning" size="24" class="mr-2">
             <v-icon v-if="!user.photo" dark>mdi-account-circle</v-icon>
             <img v-else :src="user.photo" alt="" />
