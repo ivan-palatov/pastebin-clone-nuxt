@@ -57,14 +57,14 @@ export default {
     }
   },
   methods: {
-    async edit() {
-      this.$v.touch();
+    async editProfile() {
+      this.$v.$touch();
       if (this.$v.invalid) {
         return;
       }
       this.loading = true;
       try {
-        await this.$axios.put('/users/' + this.user.id, { name: this.name });
+        await this.$axios.patch('/users/' + this.user.id, { name: this.name });
         window.location.reload();
       } catch (e) {
         if (e.response && e.response.data) {
