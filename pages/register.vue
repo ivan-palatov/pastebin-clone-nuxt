@@ -1,5 +1,5 @@
 <template>
-  <v-card elevation="12" class="mx-auto my-6" max-width="400">
+  <v-card elevation="12" class="mx-auto my-6" max-width="600">
     <v-toolbar color="primary" dark flat dense>
       <v-toolbar-title>Register</v-toolbar-title>
     </v-toolbar>
